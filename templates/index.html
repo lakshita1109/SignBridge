@@ -1,11 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SignBridge</title>
-</head>
-<body>
-  <h1>SignBridge is running</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}SignBridge - Sign language to text{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div>
+    <span class="eyebrow">Early prototype · ASL first</span>
+    <h1>Bridge the gap between signing and speaking.</h1>
+    <p class="lead">SignBridge reads hand signs through your webcam and turns them into text and speech, using hand landmarks tracked right in your browser.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary btn-lg" href="{{ url_for('translate') }}">Open translator</a>
+    </div>
+  </div>
+
+  <div class="card hero-card" aria-hidden="true">
+    <svg viewBox="0 0 200 220" fill="none">
+      <g stroke="#2f5d50" stroke-width="2.5" stroke-linecap="round" opacity=".55">
+        <path d="M100 200L75 175L55 150L40 128L28 108"/>
+        <path d="M100 200L78 120L72 90L68 68L65 48"/>
+        <path d="M78 120L100 112L100 78L100 54L100 32"/>
+        <path d="M100 112L122 118L128 90L131 70L134 52"/>
+        <path d="M122 118L142 135L152 115L158 100L163 86"/>
+        <path d="M100 200L142 135"/>
+      </g>
+      <g fill="#2f5d50">
+        <circle class="hand-dot" cx="100" cy="200" r="5"/>
+        <circle class="hand-dot" cx="75" cy="175" r="4"/><circle class="hand-dot" cx="55" cy="150" r="4"/>
+        <circle class="hand-dot" cx="40" cy="128" r="4"/><circle class="hand-dot" cx="28" cy="108" r="4"/>
+        <circle class="hand-dot" cx="78" cy="120" r="4"/><circle class="hand-dot" cx="72" cy="90" r="4"/>
+        <circle class="hand-dot" cx="68" cy="68" r="4"/><circle class="hand-dot" cx="65" cy="48" r="4"/>
+        <circle class="hand-dot" cx="100" cy="112" r="4"/><circle class="hand-dot" cx="100" cy="78" r="4"/>
+        <circle class="hand-dot" cx="100" cy="54" r="4"/><circle class="hand-dot" cx="100" cy="32" r="4"/>
+        <circle class="hand-dot" cx="122" cy="118" r="4"/><circle class="hand-dot" cx="128" cy="90" r="4"/>
+        <circle class="hand-dot" cx="131" cy="70" r="4"/><circle class="hand-dot" cx="134" cy="52" r="4"/>
+        <circle class="hand-dot" cx="142" cy="135" r="4"/><circle class="hand-dot" cx="152" cy="115" r="4"/>
+        <circle class="hand-dot" cx="158" cy="100" r="4"/><circle class="hand-dot" cx="163" cy="86" r="4"/>
+      </g>
+    </svg>
+    <div class="typed"><span>H</span><span>E</span><span>L</span><span>L</span><span>O</span></div>
+    <p class="muted small" style="margin:.6rem 0 0">21 landmarks per hand → a classifier → text</p>
+  </div>
+</section>
+
+<section class="section">
+  <h2>How it works</h2>
+  <div class="grid-3">
+    <div class="card"><div class="step-num">1</div><h3>Show a sign</h3><p class="muted">Turn on your camera. Nothing is recorded unless you choose to collect training data.</p></div>
+    <div class="card"><div class="step-num">2</div><h3>Hands become landmarks</h3><p class="muted">MediaPipe finds 21 points on each hand, right in your browser. Only those numbers are sent to the server, never the video.</p></div>
+    <div class="card"><div class="step-num">3</div><h3>Landmarks become words</h3><p class="muted">A small model predicts the sign and its confidence. Uncertain guesses are shown as uncertain, not as facts.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>What this prototype does, and doesn't</h2>
+  <div class="two-col">
+    <div class="card">
+      <h3>Planned for the MVP</h3>
+      <ul class="tick-list">
+        <li>Live fingerspelling and a small word list (the vocabulary you train)</li>
+        <li>Confidence display, editable text, speech, history</li>
+        <li>Short uploaded clips, analysed over time</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Not yet</h3>
+      <ul class="tick-list later">
+        <li>Full conversations or sign-language grammar</li>
+        <li>Indian Sign Language (planned as a separate model)</li>
+        <li>Facial expressions and large vocabularies</li>
+        <li>Text-to-sign animations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}
