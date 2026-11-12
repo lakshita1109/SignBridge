@@ -1,17 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SignBridge - Translate</title>
-</head>
-<body>
-  <h1>Translate</h1>
-  <video id="video" width="640" height="480" autoplay playsinline muted></video>
-  <br>
-  <button id="startBtn">Start camera</button>
-  <p id="status"></p>
+{% extends "base.html" %}
+{% block title %}Translate · SignBridge{% endblock %}
 
-  <script src="{{ url_for('static', filename='js/translate.js') }}"></script>
-</body>
-</html>
+{% block content %}
+<section class="page-head">
+  <h1>Live translation</h1>
+  <p class="muted">Start the camera and show your hand. For now this only tracks your hand. Recognition comes in the next batches.</p>
+</section>
+
+<div class="card" style="max-width:720px">
+  <div class="stage">
+    <video id="video" class="mirror" autoplay playsinline muted></video>
+    <canvas id="overlay" class="mirror"></canvas>
+    <div id="stageHint" class="stage-hint">Camera is off</div>
+  </div>
+
+  <div class="toolbar">
+    <button id="camBtn" class="btn btn-primary">Start camera</button>
+    <label class="check"><input type="checkbox" id="showLandmarks" checked> Show landmarks</label>
+    <span id="status" class="pill">Idle</span>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/translate.js') }}"></script>
+{% endblock %}
