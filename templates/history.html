@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}History · SignBridge{% endblock %}
+
+{% block content %}
+<section class="page-head" style="display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap">
+  <div>
+    <h1>Translation history</h1>
+    <p class="muted" style="margin:0">Sentences you saved from the translator or video page.</p>
+  </div>
+  <button id="clearAll" class="btn btn-danger" hidden>Delete all</button>
+</section>
+
+<div id="list" class="history-list" aria-live="polite"></div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}

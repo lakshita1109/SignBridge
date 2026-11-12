@@ -13,8 +13,9 @@
   {% set ep = request.endpoint %}
   <header class="nav">
     <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">✋</span>SignBridge</a>
-        <nav class="nav-links" aria-label="Main">
+            <nav class="nav-links" aria-label="Main">
       <a href="{{ url_for('translate') }}" class="{{ 'active' if ep == 'translate' }}">Translate</a>
+      <a href="{{ url_for('history') }}" class="{{ 'active' if ep == 'history' }}">History</a>
       <a href="{{ url_for('collect') }}" class="{{ 'active' if ep == 'collect' }}">Collect data</a>
     </nav>
   </header>
