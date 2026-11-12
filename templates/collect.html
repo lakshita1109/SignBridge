@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Collect data · SignBridge{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <h1>Collect training data</h1>
+  <p class="muted">Record your own signs so the model learns from real examples. Each recording is 2 seconds. Only hand landmarks are saved on your computer (in <code>data/samples.jsonl</code>), never video.</p>
+</section>
+
+<div class="workspace">
+  <div class="card">
+    <div class="toolbar">
+      <label class="field">Your name (the signer)
+        <input id="signer" type="text" placeholder="e.g. Lakshita" maxlength="40">
+      </label>
+      <label class="field">Type
+        <select id="mode">
+          <option value="letters">Letter</option>
+          <option value="words">Word</option>
+        </select>
+      </label>
+      <label class="field" id="letterField">Letter
+        <select id="letterSelect"></select>
+      </label>
+      <label class="field" id="wordField" hidden>Word
+        <input id="wordInput" type="text" list="wordList" placeholder="e.g. hello" maxlength="30">
+        <datalist id="wordList"></datalist>
+      </label>
+    </div>
+
+    <div class="stage">
+      <video id="video" class="mirror" autoplay playsinline muted></video>
+      <canvas id="overlay" class="mirror"></canvas>
+      <div id="stageHint" class="stage-hint">Camera is off</div>
+      <div id="badge" class="stage-badge" hidden>Recording</div>
+      <div id="countdown" class="countdown" hidden>3</div>
+    </div>
+
+    <div class="btn-row">
+      <button id="camBtn" class="btn btn-primary">Start camera</button>
+      <button id="recBtn" class="btn" disabled>● Record 2 seconds</button>
+      <button id="undoBtn" class="btn btn-danger">Undo last</button>
+    </div>
+    <p id="recNote" class="muted small" style="margin:.8rem 0 0">Start the camera, choose what to record, then press Record. You get a 3-second countdown.</p>
+  </div>
+
+  <div class="card stack">
+    <div>
+      <h3>Tips for good data</h3>
+      <ul class="tick-list">
+        <li>At least 15 recordings per sign, varying angle and distance a little</li>
+        <li>Ask friends or family to record too (the trainer tests on people it hasn't seen)</li>
+        <li>Vary the lighting and background</li>
+        <li>Record a <code>_nothing</code> letter (hands resting) and a <code>_neutral</code> word so the model learns "no sign"</li>
+        <li>Check each sign against a trusted ASL source before recording it</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Recordings so far <span id="total" class="muted small"></span></h3>
+      <div id="stats" class="stats"></div>
+    </div>
+    <div class="notice info" style="margin:0">
+      When you have enough, open a second terminal (with the venv active) and run <code>python train.py</code>. The app picks up the new model automatically.
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ url_for('static', filename='js/collect.js') }}"></script>
+{% endblock %}

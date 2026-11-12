@@ -4,20 +4,63 @@
 {% block content %}
 <section class="page-head">
   <h1>Live translation</h1>
-  <p class="muted">Start the camera and show your hand. For now this only tracks your hand. Recognition comes in the next batches.</p>
+  <p class="muted">Start the camera, hold a sign steady, and it is added to the text once the model is sure. Lower your hand between repeated letters.</p>
 </section>
 
-<div class="card" style="max-width:720px">
-  <div class="stage">
-    <video id="video" class="mirror" autoplay playsinline muted></video>
-    <canvas id="overlay" class="mirror"></canvas>
-    <div id="stageHint" class="stage-hint">Camera is off</div>
+<div id="modelNote" class="notice" hidden></div>
+
+<div class="workspace">
+  <div class="card">
+    <div class="toolbar">
+      <label class="field">Language
+        <select id="language">
+          <option value="asl">American Sign Language</option>
+          <option value="isl" disabled>Indian Sign Language (coming later)</option>
+        </select>
+      </label>
+      <label class="field">Recognise
+        <select id="mode">
+          <option value="letters">Letters (fingerspelling)</option>
+          <option value="words">Words</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="stage">
+      <video id="video" class="mirror" autoplay playsinline muted></video>
+      <canvas id="overlay" class="mirror"></canvas>
+      <div id="stageHint" class="stage-hint">Camera is off</div>
+    </div>
+
+    <div class="toolbar">
+      <button id="camBtn" class="btn btn-primary">Start camera</button>
+      <label class="check"><input type="checkbox" id="showLandmarks" checked> Show landmarks</label>
+      <label class="field">Minimum confidence: <b id="thrVal">70%</b>
+        <input type="range" id="threshold" min="30" max="95" value="70">
+      </label>
+    </div>
   </div>
 
-  <div class="toolbar">
-    <button id="camBtn" class="btn btn-primary">Start camera</button>
-    <label class="check"><input type="checkbox" id="showLandmarks" checked> Show landmarks</label>
-    <span id="status" class="pill">Idle</span>
+  <div class="card stack">
+    <div><span id="status" class="pill">Idle</span></div>
+
+    <div class="live">
+      <div id="liveLabel" class="live-label">-</div>
+      <div class="meter"><div id="meterFill" class="meter-fill"></div></div>
+      <div id="liveConf" class="muted small">confidence -</div>
+    </div>
+
+    <label class="field full">Translated text (you can edit it to correct mistakes)
+      <textarea id="output" rows="5" placeholder="Recognised signs appear here..."></textarea>
+    </label>
+
+    <div class="btn-row">
+      <button id="speakBtn" class="btn btn-primary">🔊 Speak</button>
+      <button id="spaceBtn" class="btn">Space</button>
+      <button id="backBtn" class="btn">⌫ Backspace</button>
+      <button id="clearBtn" class="btn btn-danger">Clear</button>
+      <button id="saveBtn" class="btn">Save to history</button>
+    </div>
   </div>
 </div>
 {% endblock %}
